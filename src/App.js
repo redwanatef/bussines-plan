@@ -8,6 +8,8 @@ import Finish from './Finish';
 
 
 function App() {
+  const final_results = []; 
+  
   return (
     <div className="App">
       <Router>
@@ -16,13 +18,13 @@ function App() {
             <StartButton />
           </Route>
           <Route path="/start">
-            <Section1 />
+            <Section1 result = {final_results} />
           </Route>
           <Route path="/section2">
-            <Section2 />
+            <Section2 result = {final_results} />
           </Route>
           <Route path="/finish">
-            <Finish />
+            <Finish result = {final_results} />
           </Route>
         </Switch>
       </Router>

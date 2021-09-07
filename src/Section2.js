@@ -1,60 +1,72 @@
+import { useMemo } from "react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { Radio, RadioGroup, TextField, Typography,FormControlLabel } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 
-const Section2 = () => {
-    const [investment, setinvestment] = useState("no");
-    const [ansY, setansY] = useState(false);
-    const [ansN, setansN] = useState(false);
+const Section2 = ({result}) => {
+    const [investment, setinvestment] = useState();
     const [body, setbody] = useState();
     const [caution, setcaution] = useState();
     const history = useHistory();
 
-
-    const handleChange = (e) => {
-        setansN(false); setansY(false);
-        setinvestment(e.target.value)
-        if (e.target.value === "yes")
-            setansY(true)
+    const validInput = useMemo(() => {
+        if(investment === "yes")
+            return false
         else
-            setansN(true)
-    }
+            return true
+    })
 
-    const handleinput = (e) => {
-
-        setbody(e.target.value);
-    }
-
+    const validButton = useMemo(()=>{
+        if(investment === "no")
+            return false
+        else if(investment === "yes" && !body)
+            return true
+        else if(investment === "yes" && body)
+            return false
+        else
+            return true
+    })
+    
 
     const handlesubmit = (e) => {
         setcaution();
         e.preventDefault();
         if (parseFloat(body) < 0)
             setcaution("enter a positive number")
-        else if (!isNaN(parseFloat(body)) || ansN === true)
+        else if (!isNaN(parseFloat(body)) || investment==="no"){
+            result[3] = investment
+            if(investment === "yes")
+                result[4] = body 
+            else
+                result[4] = "mafish" 
             history.push('/finish');
+        }
     }
     return (
         <div className="section-2">
             <div className="container">
-                <h2>Section 2</h2>
-                <p>1. Did you have an investment?</p>
+                <Typography variant="h4" component="h2" gutterBottom>Section 2</Typography>
+                <Typography paragraph color ="textPrimary" gutterBottom >1. Did you have an investment?</Typography >
+                
                 <form >
-                    <input type="radio" name="yes" value="yes" onChange={handleChange} checked={ansY} />
-                    <label>A. yes</label> <br /><br />
-                    <input type="radio" name="no" value="no" onChange={handleChange} checked={ansN} />
-                    <label>B. no</label><br /><br />
-                    <p>2. how much was the investment?</p>
-                    {investment === "yes" && <input
+                    <RadioGroup onChange={(e) => setinvestment(e.target.value)}>
+                        <FormControlLabel value="yes" control={<Radio />} label="A. yes"></FormControlLabel>
+                        <FormControlLabel value="no" control={<Radio />} label="B. no"></FormControlLabel>
+                    </RadioGroup>
+                    <Typography paragraph color ="textPrimary" gutterBottom>2. how much was the investment?</Typography>
+                     <TextField
                         className="price"
                         required
-                        placeholder="enter the number here..."
+                        fullWidth
+                        label={!validInput && "enter the number here"}
+                        disabled={validInput}
                         type="number"
                         value={body}
-                        onChange={handleinput}
-                    />}
-                    {investment === "no" && <input disabled className="price" />}
+                        onChange={(e) => setbody(e.target.value)}
+                    />
 
-                    <button onClick={handlesubmit} >Finish</button><br /><br />
+                    <Button variant="contained" onClick={handlesubmit} disabled={validButton} >Finish</Button><br /><br />
                     <p className="caution">{caution}</p>
                 </form>
             </div>

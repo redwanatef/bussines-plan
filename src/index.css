@@ -45,6 +45,7 @@ body{
 }
 .section-1 h2{
   color: #10cab7;
+  font-weight: bold;
 }
 
 .section-1 button {
@@ -53,10 +54,13 @@ body{
   border: 0;
   padding: 8px;
   border-radius: 8px;
-  cursor: pointer;
   margin-bottom: 8px;
-  width: 60px;
+  text-transform: none;
 }
+.section-1 button:disabled{
+  background-color: grey;
+}
+
 .to-sec2 button{
   width: 150px;
 }
@@ -70,6 +74,7 @@ body{
 }
 .section-2 h2{
   color: #10cab7;
+  font-weight: bold;
 }
 
 .section-2 button {
@@ -78,18 +83,21 @@ body{
   border: 0;
   padding: 8px;
   border-radius: 8px;
-  cursor: pointer;
   margin-bottom: 8px;
-  width: 60px;
+  text-transform: none;
+}
+.section-2 button:disabled{
+  background-color: grey;
 }
 .section-2 .price{
   width: 30%;
   padding: 6px 10px;
   margin: 10px 0;
-  border: 1px solid #ddd;
-  box-sizing: border-box;
   display: block;
-  border-radius: 8px;
+  cursor: text;
+}
+.section-2 .price:disabled{
+  cursor: default;
 }
 
 .section-2 .caution{
@@ -99,8 +107,31 @@ body{
 }
 
 /*finish page */
+.finish h3{
+  color: rgb(87, 219, 87);
+  font-size: 30px;
+  margin-bottom: 40px;
+  font-weight: bold;
+  line-height: 2;
+}
 
-.finish p{
-  font-size: 50px;
+.finish h2{
+  margin-top: 20px;
   color: #10cab7;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.finish .container{
+  line-height: 1.8;
+}
+
+.finish button{
+  background: #10cab7;
+  color: #fff;
+  border: 0;
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  text-transform: none;
 }
